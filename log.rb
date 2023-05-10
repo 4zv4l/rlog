@@ -12,7 +12,7 @@ def execute(line, manager)
     puts manager.logs
   when /^help/
     puts "Available commands:\n#{CMDS.join("\t")}"
-  when /^show(\s+(?<procs>\S+(\s+\S+)*))?$/
+  when /^show\s?(\s+(?<procs>\S+(\s+\S+)*))?$/
     if $~[:procs].nil?
       manager.to_s
     else
