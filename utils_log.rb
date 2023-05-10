@@ -37,6 +37,7 @@ class LogManager
   end
 
   def to_s(procs = nil)
+    nlogs = procs.nil? ? nbr_logs : 0
     @logs.each_key do |proc|
       if procs.nil?
         puts "#{proc}:".bold
@@ -46,9 +47,10 @@ class LogManager
         puts "#{proc}:".bold
         puts "======="
         puts "  #{@logs[proc]}".yellow
+        nlogs += 1
       end
     end
-    puts "TOTAL LOGS: #{nbr_logs}".green
+    puts "TOTAL LOGS: #{nlogs}".green
   end
 end
 
