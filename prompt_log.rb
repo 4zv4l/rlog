@@ -4,14 +4,18 @@ require 'readline'
 Signal.trap("INT", nil)
 
 completion = proc do |str|
-  CMDS.grep(/^#{Regexp.escape(str)}/i) unless str.end_with?(' ')
+  if Readline.line_buffer.split.length > 1 or Readline.line_buffer.end_with?(' ')
+    Dir["#{str}*"].grep(/^#{Regexp.escape(str)}/i)
+  else
+    CMDS.grep(/^#{Regexp.escape(str)}/i)
+  end
 end
 
 Readline.completion_proc = completion        # Set completion process
-Readline.completion_append_character = ' '   # Make sure to add a space after completion
-Readline.completer_word_break_characters = "\n"
+Readline.completion_append_character = nil   # Make sure to add a space after completion
+Readline.completer_word_break_characters = ' '
 
-def prompt_lines(prompt='> ')
+def prompt_lines(prompt = '> ')
   while (line = Readline.readline(prompt, true))  # make add_hist = true
     yield line
   end
