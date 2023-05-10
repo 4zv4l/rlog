@@ -35,6 +35,8 @@ def execute(line, manager)
   when /^exit/
     puts 'Exiting..'.green
     exit 0
+  when ''
+    nil
   else
     puts "#{line}: unknown command, type 'help' for help"
   end
