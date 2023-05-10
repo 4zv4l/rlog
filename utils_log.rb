@@ -22,7 +22,8 @@ class LogManager
   end
 
   def add_log(log)
-    proc = Log.new(log).parse[:prg]
+    warn "wrong format: #{log}".red and return if (proc = Log.new(log).parse[:prg]).nil?
+
     @logs[proc] = @logs[proc].nil? ? [log] : @logs[proc] << log
   end
 
@@ -68,7 +69,7 @@ class Log
   end
 
   def parse
-    /^(?<date>([^\s]+)(\s)+(\d+)\s((\d+:?){3}))\s(?<host>[^\s]+)\s(?<prg>[^\s\[]+)(\[(?<pid>\d+)\])?:\s(?<msg>.+)$/.match(self.to_s)
+    /^(?<date>([^\s]+)(\s)+(\d+)\s((\d+:?){3}))\s(?<host>[^\s]+)\s(?<prg>[^\s\[]+)(\[(?<pid>\d+)\])?:\s(?<msg>.+)$/.match(self.to_s) or {}
   end
 
   def to_s
