@@ -23,7 +23,7 @@ class LogManager
 
   def add_log(log)
     proc = Log.new(log).parse[:prg]
-    @logs[proc] = log
+    @logs[proc] = @logs[proc].nil? ? [log] : @logs[proc] << log
   end
 
   def add_logs(logs)
@@ -33,7 +33,7 @@ class LogManager
   end
 
   def nbr_logs
-    @logs.length
+    @logs.values.flatten.length
   end
 
   def to_s(procs = nil)
@@ -42,12 +42,16 @@ class LogManager
       if procs.nil?
         puts "#{proc}:".bold
         puts "======="
-        puts "  #{@logs[proc]}".yellow
+        @logs[proc].each do |log|
+          puts "  #{log}".yellow
+        end
       elsif procs.include?(proc)
         puts "#{proc}:".bold
         puts "======="
-        puts "  #{@logs[proc]}".yellow
-        nlogs += 1
+        @logs[proc].each do |log|
+          puts "  #{log}".yellow
+          nlogs += 1
+        end
       end
     end
     puts "TOTAL LOGS: #{nlogs}".green
