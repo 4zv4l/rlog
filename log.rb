@@ -4,7 +4,7 @@ require_relative 'prompt_log'
 require_relative 'utils_log'
 
 # List of commands
-CMDS = %w[show load help exit].sort
+CMDS = %w[show load clear help exit].sort
 
 def execute(line, manager)
   case line
@@ -12,6 +12,8 @@ def execute(line, manager)
     puts manager.logs
   when /^help/
     puts "Available commands:\n#{CMDS.join("\t")}"
+  when /^clear/
+    manager.clear
   when /^show\s?(\s+(?<procs>\S+(\s+\S+)*))?$/
     if $~[:procs].nil?
       manager.to_s

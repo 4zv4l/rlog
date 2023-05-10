@@ -32,6 +32,10 @@ class LogManager
     end
   end
 
+  def clear
+    @logs.clear
+  end
+
   def nbr_logs
     @logs.values.flatten.length
   end
