@@ -32,14 +32,6 @@ class LogManager
     end
   end
 
-  def clear
-    @logs.clear
-  end
-
-  def search_logs(proc)
-    @logs.key?(proc) ? @logs[proc] : nil
-  end
-
   def nbr_logs
     @logs.length
   end
