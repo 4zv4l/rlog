@@ -7,7 +7,7 @@ completion = proc do |str|
   if Readline.line_buffer.split.length > 1 or Readline.line_buffer.end_with?(' ')
     Dir["#{str}*"].grep(/^#{Regexp.escape(str)}/i)
   else
-    CMDS.grep(/^#{Regexp.escape(str)}/i)
+    CMDS.grep(/^#{Regexp.escape(str)}/i).map { |s| "#{s} " }
   end
 end
 
