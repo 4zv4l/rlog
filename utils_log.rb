@@ -24,7 +24,7 @@ class LogManager
   def add_log(log)
     warn "wrong format: #{log}".red and return if (proc = Log.new(log).parse[:prg]).nil?
 
-    @logs[proc] = @logs[proc].nil? ? [log] : @logs[proc] << log
+    @logs[proc] = @logs[proc].nil? ? [log] : (@logs[proc] << log).uniq
   end
 
   def add_logs(logs)
