@@ -5,7 +5,7 @@ require_relative 'prompt_log'
 require_relative 'utils_log'
 
 # List of commands
-CMDS = %w[show load unload clear help exit].sort
+CMDS = %w[show load unload total clear help exit].sort
 
 def execute(line, manager)
   case line
@@ -17,6 +17,8 @@ def execute(line, manager)
     $stdout.clear_screen
   when /^unload/
     manager.clear
+  when /^total/
+    puts "TOTAL LOGS: #{manager.nbr_logs}".green
   when /^show\s?(\s+(?<procs>\S+(\s+\S+)*))?$/
     if $~[:procs].nil?
       manager.to_s
@@ -24,7 +26,7 @@ def execute(line, manager)
       manager.to_s($~[:procs].split)
     end
   when /^load\s?(?<path>[^\s]+)?(?<too_much>.+)?$/
-    if not $~[:too_much].nil?
+    if !$~[:too_much].nil?
       warn "load: too many arguments".red
     elsif $~[:path].nil?
       warn "load: missing path argument".red
