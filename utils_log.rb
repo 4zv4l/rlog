@@ -15,6 +15,7 @@ class LogManager
     File.foreach(path, chomp: true) do |log|
       add_log(log)
     end
+    uniq_entry
   end
 
   def load_logs_from_folder(path)
@@ -24,7 +25,7 @@ class LogManager
   def add_log(log)
     warn "wrong format: #{log}".red and return if (proc = Log.new(log).parse[:prg]).nil?
 
-    @logs[proc] = @logs[proc].nil? ? [log] : (@logs[proc] << log).uniq
+    @logs[proc] = @logs[proc].nil? ? [log] : @logs[proc] << log
   end
 
   def add_logs(logs)
@@ -35,6 +36,12 @@ class LogManager
 
   def clear
     @logs.clear
+  end
+
+  def uniq_entry
+    @logs.each_key do |key|
+      @logs[key].uniq!
+    end
   end
 
   def nbr_logs
