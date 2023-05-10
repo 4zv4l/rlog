@@ -18,7 +18,7 @@ def execute(line, manager)
     else
       manager.to_s($~[:procs].split)
     end
-  when /^load (?<path>[^\s]+)?(?<too_much>.+)?$/
+  when /^load\s?(?<path>[^\s]+)?(?<too_much>.+)?$/
     if not $~[:too_much].nil?
       warn "load: too many arguments".red
     elsif $~[:path].nil?
@@ -30,7 +30,7 @@ def execute(line, manager)
       manager.load_log_from_folder($~[:path])
       puts "LOADED: DIRECTORY".green
     else
-      warn "Error: Invalid path argument".red
+      warn "load: Invalid path argument".red
     end
   when /^exit/
     puts 'Exiting..'.green
